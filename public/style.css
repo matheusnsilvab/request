@@ -1,0 +1,209 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, Arial;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    background: linear-gradient(to right, #EB4000, #ec4b3d);
+}
+
+header {
+    margin: 2rem;
+    padding: 4rem;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #9E2A00;
+}
+
+header h1 {
+    padding-bottom: 2rem;
+}
+
+input {
+    margin: 10px;
+    padding: .8rem;
+    width: 60%;
+    font-size: 1rem;
+    border: none;
+    color: #000;
+    border-radius: 4px;
+    outline: none;
+    background-color: #fff;
+}
+
+button {
+    padding: 14px;
+    width: 20%;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    color: #fff;
+    outline: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: Arial;
+    font-weight: bold;
+    transition: all .3s ease-in-out;
+    background-color: #000;
+}
+
+button:hover {
+    color: #fff4f4;
+    background-color: rgb(32, 23, 23);
+}
+
+#tasks {
+    margin: 4rem;
+}
+
+ul {
+    list-style: none;
+}
+
+ul li {
+    margin: 10px;
+    padding: 1rem;
+    position: relative;
+    font-size: 1.3rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 3px;
+    justify-content: space-between;
+    text-decoration: none;
+    background-color: #842401;
+}
+
+ul li a {
+    font-size: 1.3rem;
+    color: #fff;
+    text-decoration: none;
+}
+
+ul li span {
+    padding-left: 1rem;
+    font-size: .7rem;
+    color: #f3f3f3;
+}
+
+ul li div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+ul li:nth-child(odd) {
+    background-color: #fb7848;
+}
+
+ul li:hover {
+    background-color: rgb(185, 4, 4);
+}
+
+#btnUpdate,
+#btnDelete {
+    color: #fff;
+    margin: 10px;
+    transition: all .3s ease-in-out;
+}
+
+#btnUpdate:hover,
+#btnDelete:hover {
+    color: #ccc;
+}
+
+#modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000080;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: all;
+}
+
+#head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+#card {
+    width: 30rem;
+    position: relative;
+    border-radius: 8px;
+    background-color: #202024;
+}
+
+#card h2 {
+    margin: 0;
+    color: #fff;
+}
+
+#close {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: all .3s ease-in-out;
+}
+
+#card hr {
+    width: 90%;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+#card p {
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+
+#btns {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+
+#btnNot,
+#btnYes {
+    margin: 15px;
+    padding: 10px 28px;
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 1rem;
+    text-decoration: none;
+    transition: all .3s ease-in-out;
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+#btnNot:hover,
+#btnYes:hover {
+    color: #000;
+    background-color: #F1EDEA;
+}
+
+#aviso {
+    margin: 2rem;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+}
