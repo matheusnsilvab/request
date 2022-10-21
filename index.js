@@ -2,40 +2,41 @@ const express = require('express')
 const path = require('path')
 const app = express()
 const routes = require('./routes/routes')
-const resolvers = {
-    user({ id }) {
-        return providers.user.find(item => item.id === Number(id))
-    },
-    users() {
-        return providers.user
-    },
-    createUser({ name }) {
-        const user = {
-            id: id +
-                name
-        }
-        providers.user.push(user)
-        return user
-    }
-}
-
 const connectToDb = require('./database/db')
 const providers = { users: [] }
-const graphql = require('graphql')
-const { buildSchema } = require('graphql')
-const Schema = buildSchema(`
-    type Query {
-    user: String
+const { graphql } = require('graphql')
+const { ApolloServer, gql } = require('apollo-server');
+const { Query } = require('mongoose')
+const resolvers = {
+  Query: {
+    nome() {
+      return 'Matheus Nunes'
+    },
+    idade() {
+      return 23
+    },
+    ativo() {
+      return true;
+    },
+    id() {
+      return 1234567;
+    }
   }
-`)
+};
 
-const name = "Matheus Nunes"
+const typeDefs = gql`
+type Query {
+    nome: String
+    idade: Int
+    ativo: Boolean
+    id: ID
+  } 
+`
 
-app.use('graphql', express)({
-    Schema,
-    rootValue: resolvers,
-    graphql: true
-})
+const server = new ApolloServer({
+  typeDefs,
+  resolvers
+});
 
 connectToDb()
 const port = 3000
@@ -45,4 +46,5 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.urlencoded())
 app.use(routes)
 
+server.listen()
 app.listen(port, () => console.log(`Servidor rodando na porta ${port}`))
