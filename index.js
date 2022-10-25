@@ -7,30 +7,41 @@ const providers = { users: [] }
 const { graphql } = require('graphql')
 const { ApolloServer, gql } = require('apollo-server');
 const { Query } = require('mongoose')
+
+const users = [
+  { _id: String(Math.random()), name: 'Matheus1', email: 'matheus1@teste.com', active: true },
+  { _id: String(Math.random()), name: 'Matheus2', email: 'matheus2@teste.com', active: false },
+  { _id: String(Math.random()), name: 'Matheus3', email: 'matheus3@teste.com', active: true },
+];
+
 const resolvers = {
   Query: {
-    nome() {
-      return 'Matheus Nunes'
-    },
-    idade() {
-      return 23
-    },
-    ativo() {
-      return true;
-    },
-    id() {
-      return 1234567;
+    users: () => users,
+    getUserByEmail: (_, args) => {
+      return users.find((user) => user.email === args.email);
     }
   }
 };
 
+
 const typeDefs = gql`
-type Query {
-    nome: String
-    idade: Int
-    ativo: Boolean
-    id: ID
-  } 
+  type User {
+    _id: ID!
+    name: String!
+    email: String!
+    active: Boolean!
+}
+  type Post {
+    _id: ID!
+    title: String!
+    content: String!
+    author: User!
+  }
+
+  type Query {
+  users: [User!]!
+  getUserByEmail(email: String!): User!
+ }
 `
 
 const server = new ApolloServer({
