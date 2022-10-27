@@ -5,48 +5,49 @@ const routes = require('./routes/routes')
 const connectToDb = require('./database/db')
 const providers = { users: [] }
 const { graphql } = require('graphql')
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer, gql, UserInput } = require('apollo-server');
 const { Query } = require('mongoose')
-
-const users = [
-  { _id: String(Math.random()), name: 'Matheus1', email: 'matheus1@teste.com', active: true },
-  { _id: String(Math.random()), name: 'Matheus2', email: 'matheus2@teste.com', active: false },
-  { _id: String(Math.random()), name: 'Matheus3', email: 'matheus3@teste.com', active: true },
-];
-
 const resolvers = {
-  Query: {
-    users: () => users,
-    getUserByEmail: (_, args) => {
-      return users.find((user) => user.email === args.email);
+    Query: {
+        users: () => users,
+        user: (_, { id }) => User.findById(id),
+    },
+    Mutation: {
+        createUser: (_, { data }) => User.create(data),
+        updateUser: (_, { id, data }) => User.findOneAndUpdate(id, data, { new: true }),
+        deleteUser: async (_, { id }) => !!(await User.findOneAndDelete(id)),
     }
-  }
 };
-
 
 const typeDefs = gql`
   type User {
     _id: ID!
-    name: String!
+    firstName: String!
+    lastName: String!
     email: String!
     active: Boolean!
 }
-  type Post {
-    _id: ID!
-    title: String!
-    content: String!
-    author: User!
+  input UserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    active: Boolean
   }
-
   type Query {
   users: [User!]!
-  getUserByEmail(email: String!): User!
+  user(id: ID!): User!
+ }
+
+ type Mutation {
+    createUser(data: UserInput!): User!
+    updateUser(id: ID, data: UserInput!): User!
+    deleteUser(id: ID!): Boolean
  }
 `
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers
+    typeDefs,
+    resolvers
 });
 
 connectToDb()
