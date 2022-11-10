@@ -1,58 +1,23 @@
-const db = require('../../../db')
-
-function geradorDeId(lista) {
-    let novoId;
-    let ultimo = lista[lista.length - 1];
-    if (!ultimo) {
-        novoId = 0;
-    } else {
-        novoId = ultimo.id;
-    }
-
-    return ++novoId;
+type Usuario {
+  id: Int
+  nome: String
+  idade: Int
+  email: String
+  perfil: Perfil
 }
 
-module.exports = {
-    Usuario: {
-        perfil(usuario) {
-            return db.perfis.find((p) => p.id === usuario.perfil_id);
-        },
-    },
-    Query: {
-        usuario(obj, args) {
-            return db.usuarios.find((db) => db.id === args.id);
-        },
-        usuarios: () => db.usuarios,
-    },
-    Mutation: {
-        criarUsuario(_, { data }) {
+input UsuarioInput {
+  nome: String
+  idade: Int
+  email: String
+}
 
-            const { email } = data
+type Query {
+  usuario(id: Int): Usuario
+  usuarios: [Usuario]
+}
 
-            const usuarioExistente = db.usuarios.some(u => u.email === email)
-            if (usuarioExistente) {
-                throw new Error(`Usuário ${data.email} já existe!`);
-            }
-
-            const novoUsuario = {
-                ...data,
-                id: geradorDeId(db.usuarios),
-                perfil_id: 2
-            }
-            db.usuarios.push(novoUsuario)
-            return novoUsuario;
-        },
-        atualizarUsuario(_, id, data) {
-            const usuario = db.usuarios.find(u => u.id === id);
-            const indice = db.usuarios.findIndex(u => u.id === id);
-
-            const novoUsuario = {
-                ...usuario,
-                ...data
-            }
-            db.usuarios.splice(indice, 1, novoUsuario)
-
-            return novoUsuario;
-        }
-    },
-};
+type Mutation {
+  criarUsuario(data: UsuarioInput): Usuario!
+  atualizarUsuario(id: Int!, data: UsuarioInput): Usuario!
+}
