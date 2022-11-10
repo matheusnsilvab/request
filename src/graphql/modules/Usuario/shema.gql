@@ -1,0 +1,12 @@
+
+type Usuario {
+  id: Int
+  nome: String
+  idade: Int
+  perfil: Perfil
+}
+
+type Query {
+  usuario(id: Int): Usuario
+  usuarios: [Usuario]
+}
