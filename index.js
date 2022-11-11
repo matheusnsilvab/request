@@ -11,6 +11,7 @@ const server = new ApolloServer({
     if (err.message.startsWith(`Usuário`)) {
       return new Error(err.message);
     }
+    return err;
   }
 });
 
