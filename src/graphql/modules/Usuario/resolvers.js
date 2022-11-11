@@ -26,6 +26,13 @@ module.exports = {
   },
   Mutation: {
     criarUsuario(_, args) {
+
+      const { email } = args
+      const usuarioExistente = db.usuarios.some(u => u.email === email)
+      if (usuarioExistente) {
+        throw new Error(`Usuário ${args.nome} já existe!`)
+      }
+
       const novoUsuario = {
         ...args,
         id: geradorDeId(db.usuarios),
