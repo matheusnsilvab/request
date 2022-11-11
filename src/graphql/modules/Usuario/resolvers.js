@@ -35,7 +35,7 @@ module.exports = {
       const usuarioExistente = db.usuarios.some((u) => u.email === email);
 
       if (usuarioExistente) {
-        throw new Error(`Usuário Existente: ${data.nome}`);
+        throw new Error(`Usuário ${data.nome} já existe!`);
       }
 
       const novoUsuario = {
